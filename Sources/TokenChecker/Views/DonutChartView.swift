@@ -3,11 +3,18 @@ import SwiftUI
 /// 5h usage 1 本ぶんの円形プログレス。CCMeter の二重ドーナツから内側 7d を削除した版。
 ///
 /// 中央にどのサービスかを示す SF Symbol を表示する（メニューバーで Claude / Codex を一目で区別）。
+/// ドーナツ中央に何を描くかを表すモード。
+enum DonutCenter {
+    case none
+    case sfSymbol(String, scale: CGFloat = 0.48)
+    case text(String, scale: CGFloat = 0.48)
+}
+
 struct DonutChartView: View {
     let value: Double   // 0.0 〜 1.0
     var size: CGFloat = 18
     var lineWidth: CGFloat = 4
-    var centerSymbol: String? = nil   // 中央に表示する SF Symbol 名
+    var center: DonutCenter = .none
 
     var body: some View {
         ZStack {
@@ -25,13 +32,25 @@ struct DonutChartView: View {
                 .frame(width: size - lineWidth, height: size - lineWidth)
                 .rotationEffect(.degrees(-90))
             // 中央のロゴ
-            if let symbol = centerSymbol {
-                Image(systemName: symbol)
-                    .font(.system(size: size * 0.45, weight: .semibold))
-                    .foregroundStyle(.primary)
-            }
+            centerContent
         }
         .frame(width: size, height: size)
+    }
+
+    @ViewBuilder
+    private var centerContent: some View {
+        switch center {
+        case .none:
+            EmptyView()
+        case .sfSymbol(let name, let scale):
+            Image(systemName: name)
+                .font(.system(size: size * scale, weight: .semibold))
+                .foregroundStyle(.primary)
+        case .text(let str, let scale):
+            Text(str)
+                .font(.system(size: size * scale, weight: .bold, design: .monospaced))
+                .foregroundStyle(.primary)
+        }
     }
 
     private var clamped: Double { min(max(value, 0), 1) }

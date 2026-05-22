@@ -1,16 +1,24 @@
 import SwiftUI
 
 /// Claude / Codex 1 サービスぶんの詳細セクション。
+/// どのブランドのセクションかを表す。
+enum ServiceBrand {
+    case claude
+    case codex
+}
+
 struct ServiceSectionView: View {
     let title: String
-    let symbol: String   // SF Symbol
+    let brand: ServiceBrand
     let result: Result<ServiceUsage, DomainError>?
     let loginAction: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 6) {
-                Image(systemName: symbol)
+                brandMark
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.primary)
                 Text(title)
                     .font(.system(size: 13, weight: .semibold))
                 Spacer()
@@ -100,6 +108,16 @@ struct ServiceSectionView: View {
         .padding(8)
         .background(Color.orange.opacity(0.08))
         .clipShape(RoundedRectangle(cornerRadius: 6))
+    }
+
+    @ViewBuilder
+    private var brandMark: some View {
+        switch brand {
+        case .claude:
+            Image(systemName: "sparkles")
+        case .codex:
+            Image(systemName: "terminal.fill")
+        }
     }
 
     private func color(for value: Double) -> Color {

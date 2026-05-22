@@ -11,7 +11,7 @@ struct UsagePopoverView: View {
 
             ServiceSectionView(
                 title: "Claude Code",
-                symbol: "sparkles",
+                brand: .claude,
                 result: viewModel.snapshot.claude,
                 loginAction: { viewModel.openClaudeLogin() }
             )
@@ -20,7 +20,7 @@ struct UsagePopoverView: View {
 
             ServiceSectionView(
                 title: "Codex",
-                symbol: "chevron.left.forwardslash.chevron.right",
+                brand: .codex,
                 result: viewModel.snapshot.codex,
                 loginAction: { viewModel.openCodexLogin() }
             )

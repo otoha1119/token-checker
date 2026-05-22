@@ -21,34 +21,37 @@ struct MenuBarLabel: View {
         let claude = utilization(from: viewModel.snapshot.claude)
         let codex = utilization(from: viewModel.snapshot.codex)
         let content = HStack(spacing: 6) {
-            HStack(spacing: 2) {
+            HStack(spacing: 3) {
                 DonutChartView(
                     value: claude ?? 0,
-                    size: 18,
+                    size: 20,
                     lineWidth: 3,
-                    centerSymbol: "sparkles"   // Claude のロゴ代わり（ポップオーバーと統一）
+                    center: .sfSymbol("sparkles", scale: 0.48)
                 )
                 Text(percentLabel(claude))
-                    .font(.system(size: 11, weight: .medium))
+                    .font(.system(size: 11, weight: .semibold))
             }
-            HStack(spacing: 2) {
+            HStack(spacing: 3) {
                 DonutChartView(
                     value: codex ?? 0,
-                    size: 18,
+                    size: 20,
                     lineWidth: 3,
-                    centerSymbol: "chevron.left.forwardslash.chevron.right"   // Codex
+                    center: .sfSymbol("terminal.fill", scale: 0.48)
                 )
                 Text(percentLabel(codex))
-                    .font(.system(size: 11, weight: .medium))
+                    .font(.system(size: 11, weight: .semibold))
             }
         }
         .padding(.horizontal, 2)
         .foregroundStyle(Color.primary)
 
         let renderer = ImageRenderer(content: content)
-        renderer.scale = NSScreen.main?.backingScaleFactor ?? 2
-        let image = renderer.nsImage
-        image?.isTemplate = false
+        // ビットマップは高 DPI で焼いておく．image.size には触らない
+        // （触ると point 単位として誤認されて表示サイズまで縮んでしまう）．
+        let maxScale = NSScreen.screens.map(\.backingScaleFactor).max() ?? 2
+        renderer.scale = max(maxScale, 3)
+        guard let image = renderer.nsImage else { return nil }
+        image.isTemplate = false
         return image
     }
 
