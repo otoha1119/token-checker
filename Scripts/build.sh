@@ -84,7 +84,9 @@ cp Resources/Info.plist "${CONTENTS}/"
 
 if ! ${NO_SIGN}; then
     info "Code signing ${APP_BUNDLE}..."
-    IDENTITY=$(security find-identity -v -p codesigning 2>/dev/null | grep -E '"Apple Development|Developer ID' | head -1 | sed -E 's/.*"(.*)"/\1/')
+    # 注: || true を末尾に入れる必要がある．grep が一致無しで exit 1 を返すと
+    # set -euo pipefail の pipefail と errexit が組み合わさってここで script が落ちる．
+    IDENTITY=$(security find-identity -v -p codesigning 2>/dev/null | grep -E '"Apple Development|Developer ID' | head -1 | sed -E 's/.*"(.*)"/\1/' || true)
     if [[ -n "${IDENTITY}" ]]; then
         codesign --force --sign "${IDENTITY}" \
             --entitlements "${ENTITLEMENTS}" \
