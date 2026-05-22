@@ -1,0 +1,65 @@
+<svg viewBox="0 0 360 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'SF Pro Text', Helvetica, sans-serif">
+  <!-- popover background -->
+  <rect x="10" y="10" width="340" height="450" rx="12" fill="#1c1c1e" stroke="#3a3a3c" stroke-width="1"/>
+  <!-- little arrow at top -->
+  <polygon points="170,4 180,14 160,14" fill="#1c1c1e" stroke="#3a3a3c" stroke-width="1"/>
+
+  <!-- header -->
+  <text x="30" y="40" fill="#ffffff" font-size="14" font-weight="600">⏱ Token Checker</text>
+
+  <!-- Claude section -->
+  <text x="30" y="74" fill="#ffffff" font-size="13" font-weight="600">✦ Claude Code</text>
+  <text x="320" y="74" fill="#0a84ff" font-size="11" text-anchor="end">🔑 ログイン</text>
+
+  <text x="30" y="96" fill="#8e8e93" font-size="11">5時間</text>
+  <text x="320" y="96" fill="#ff9500" font-size="12" font-weight="700" text-anchor="end">42%</text>
+  <!-- progress bar -->
+  <rect x="30" y="103" width="290" height="6" rx="3" fill="#48484a"/>
+  <rect x="30" y="103" width="121.8" height="6" rx="3" fill="#ff9500"/>
+  <text x="30" y="124" fill="#636366" font-size="10">あと 2時間18分 (00:32 リセット)</text>
+
+  <text x="30" y="144" fill="#8e8e93" font-size="11">週次</text>
+  <text x="320" y="144" fill="#34c759" font-size="11" text-anchor="end">31%</text>
+
+  <text x="30" y="160" fill="#8e8e93" font-size="11">週次 (Sonnet)</text>
+  <text x="320" y="160" fill="#34c759" font-size="11" text-anchor="end">18%</text>
+
+  <!-- divider -->
+  <line x1="20" y1="180" x2="350" y2="180" stroke="#3a3a3c"/>
+
+  <!-- Codex section -->
+  <text x="30" y="206" fill="#ffffff" font-size="13" font-weight="600">⟨/⟩ Codex</text>
+  <text x="320" y="206" fill="#0a84ff" font-size="11" text-anchor="end">🔑 ログイン</text>
+
+  <text x="30" y="228" fill="#8e8e93" font-size="11">5時間</text>
+  <text x="320" y="228" fill="#34c759" font-size="12" font-weight="700" text-anchor="end">18%</text>
+  <rect x="30" y="235" width="290" height="6" rx="3" fill="#48484a"/>
+  <rect x="30" y="235" width="52.2" height="6" rx="3" fill="#34c759"/>
+  <text x="30" y="256" fill="#636366" font-size="10">あと 4時間12分 (02:26 リセット)</text>
+
+  <text x="30" y="276" fill="#8e8e93" font-size="11">週次</text>
+  <text x="320" y="276" fill="#34c759" font-size="11" text-anchor="end">12%</text>
+
+  <!-- divider -->
+  <line x1="20" y1="296" x2="350" y2="296" stroke="#3a3a3c"/>
+
+  <!-- settings -->
+  <text x="30" y="320" fill="#8e8e93" font-size="11">更新間隔</text>
+  <rect x="240" y="308" width="80" height="22" rx="4" fill="#2c2c2e"/>
+  <text x="280" y="324" fill="#ffffff" font-size="11" text-anchor="middle">1分 ▾</text>
+
+  <text x="30" y="356" fill="#8e8e93" font-size="11">ログイン時に自動起動</text>
+  <rect x="280" y="346" width="36" height="20" rx="10" fill="#34c759"/>
+  <circle cx="306" cy="356" r="8" fill="#ffffff"/>
+
+  <!-- divider -->
+  <line x1="20" y1="386" x2="350" y2="386" stroke="#3a3a3c"/>
+
+  <!-- footer -->
+  <text x="30" y="410" fill="#636366" font-size="10">更新: 22:14</text>
+  <circle cx="300" cy="406" r="11" fill="#2c2c2e"/>
+  <text x="300" y="411" fill="#0a84ff" font-size="12" text-anchor="middle">⟳</text>
+  <text x="320" y="411" fill="#636366" font-size="11">終了</text>
+
+  <!-- callout boxes -->
+</svg>

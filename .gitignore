@@ -1,0 +1,34 @@
+# SwiftPM
+.build/
+.swiftpm/
+Package.resolved
+DerivedData/
+
+# Built artifact
+TokenChecker.app/
+
+# macOS
+.DS_Store
+
+# IDE / editor
+*.xcuserstate
+xcuserdata/
+*.swp
+
+# --- Claude Code 関連すべて（個人ワークフロー） ---
+# 設定 / hooks / sub-agent 定義
+.claude/
+# プロジェクト指示書（個人作業向けの内容）
+CLAUDE.md
+# claude-mem が自動生成するメモリコンテキスト
+AGENTS.md
+.claude-mem/
+*.claude-mem*
+# プランファイル（ローカル）
+.plans/
+*.plan.md
+
+# --- 仕様書（README 以外） ---
+# docs/ は内部設計メモなので丸ごと非公開
+# README から参照する画像は .github/assets/ に置いてある（こちらは公開）
+docs/

@@ -1,0 +1,35 @@
+<svg viewBox="0 0 520 60" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'SF Pro Text', Helvetica, sans-serif">
+  <!-- macOS menu bar background -->
+  <rect x="0" y="0" width="520" height="32" fill="#2c2c2e" rx="6"/>
+
+  <!-- Some other status icons (battery, wifi etc.) -->
+  <text x="20"  y="22" fill="#d0d0d2" font-size="13">􀵳</text>
+  <text x="50"  y="22" fill="#d0d0d2" font-size="13">􀅏 84%</text>
+  <text x="120" y="22" fill="#d0d0d2" font-size="13">􁒶</text>
+  <text x="155" y="22" fill="#d0d0d2" font-size="13">Mon 22:14</text>
+
+  <!-- token-checker (highlighted with a subtle ring) -->
+  <rect x="248" y="6" width="120" height="20" fill="#3a3a3c" rx="4" stroke="#0a84ff" stroke-width="0.5"/>
+
+  <!-- Claude donut + % -->
+  <g transform="translate(258, 16)">
+    <circle r="7" stroke="#48484a" stroke-width="2.5" fill="none"/>
+    <circle r="7" stroke="#34c759" stroke-width="2.5" fill="none"
+            stroke-dasharray="18.5 60" stroke-linecap="round"
+            transform="rotate(-90)"/>
+    <text x="11" y="3.5" fill="#ffffff" font-size="10" font-weight="500">42%</text>
+  </g>
+
+  <!-- Codex donut + % -->
+  <g transform="translate(322, 16)">
+    <circle r="7" stroke="#48484a" stroke-width="2.5" fill="none"/>
+    <circle r="7" stroke="#34c759" stroke-width="2.5" fill="none"
+            stroke-dasharray="7.9 60" stroke-linecap="round"
+            transform="rotate(-90)"/>
+    <text x="11" y="3.5" fill="#ffffff" font-size="10" font-weight="500">18%</text>
+  </g>
+
+  <!-- Annotation arrow -->
+  <line x1="308" y1="36" x2="308" y2="48" stroke="#0a84ff" stroke-width="1"/>
+  <text x="190" y="56" fill="#0a84ff" font-size="10" font-weight="500">Token Checker — Claude / Codex の 5h 使用率</text>
+</svg>
