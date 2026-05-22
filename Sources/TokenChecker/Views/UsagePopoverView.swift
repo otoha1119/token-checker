@@ -36,7 +36,6 @@ struct UsagePopoverView: View {
 
     private var header: some View {
         HStack {
-            Image(systemName: "gauge.with.dots.needle.50percent")
             Text("Token Checker")
                 .font(.system(size: 14, weight: .semibold))
             Spacer()
