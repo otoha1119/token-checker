@@ -51,7 +51,6 @@ codex login
 - **Claude**: `/usr/bin/security` 経由で Keychain (`Claude Code-credentials`) から OAuth アクセストークンを取得し、`https://api.anthropic.com/api/oauth/usage` に対して `anthropic-beta: oauth-2025-04-20` ヘッダー付きで GET する。
 - **Codex**: `/opt/homebrew/bin/codex app-server` を子プロセスとして起動し、行区切り JSON-RPC 経由で `account/rateLimits/read` を呼ぶ。
 
-外部への通信は Claude の上記 1 エンドポイントのみで、Codex 側はローカル IPC に閉じる。
 
 ## アンインストール
 
@@ -60,7 +59,10 @@ killall TokenChecker
 defaults delete com.token-checker.app 2>/dev/null
 ```
 
-## ライセンスと謝辞
-データ取得手法は次のオープンソース実装を参考にした。
-- [s-age/ccmeter](https://github.com/s-age/ccmeter) — Anthropic OAuth usage エンドポイントの利用方法
-- [ml0-1337/codex-usage-menu](https://github.com/ml0-1337/codex-usage-menu) — `codex app-server` JSON-RPC スキーマ
+## 再配布・商標利用について
+
+本リポジトリには明示的なライセンスを設定していない。個人利用・改変は自由だが、再配布・フォーク公開 を行う場合は事前に作者まで連絡すること。
+
+## 免責事項
+
+本ソフトウェアは現状有姿 (as-is) で提供されるものであり、動作・安全性・正確性について一切の保証を行わない。本ソフトウェアの利用に起因して発生したいかなる損害 (データ損失、アカウント停止、トークン漏洩、セキュリティインシデント等を含むがこれに限らない) についても、作者は一切の責任を負わない。利用者自身の責任において使用すること。
