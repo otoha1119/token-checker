@@ -86,8 +86,14 @@ if [[ ! -f Resources/AppIcon.icns ]]; then
 fi
 cp Resources/AppIcon.icns "${RESOURCES}/"
 
-# MIT 帰属表示の同梱: ccmeter (MIT) 由来部分を含むため、配布バイナリ内に
-# ライセンス本文と著作権表示を同梱する必要がある．
+# MIT 帰属表示の同梱: 本ソフトウェアの MIT ライセンス本文と、ccmeter (MIT) 由来部分の
+# 著作権表示を配布バイナリ内に同梱する必要がある．
+if [[ -f LICENSE ]]; then
+    cp LICENSE "${RESOURCES}/"
+else
+    error "LICENSE が見つかりません。MIT ライセンス同梱のため必須です。"
+    exit 1
+fi
 if [[ -f THIRD_PARTY_NOTICES.md ]]; then
     cp THIRD_PARTY_NOTICES.md "${RESOURCES}/"
 else

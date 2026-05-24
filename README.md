@@ -69,9 +69,10 @@ killall TokenChecker
 defaults delete com.token-checker.app 2>/dev/null
 ```
 
-## 再配布・商標利用について
+## ライセンス
 
-本リポジトリには明示的なライセンスを設定していない。個人利用・改変は自由だが、再配布・フォーク公開 を行う場合は事前に作者まで連絡すること。
+本ソフトウェアは [MIT License](./LICENSE) で配布される。第三者由来部分のライセンスは [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) を参照。
+なお「Anthropic」「Claude」「Codex」は各社の商標であり、本ソフトウェアは Anthropic および OpenAI の公式プロダクトではなく、両社による承認・推奨を受けたものでもない。
 
 ## 免責事項
 
