@@ -71,7 +71,7 @@ defaults delete com.token-checker.app 2>/dev/null
 
 ## ライセンス
 
-本ソフトウェアは [MIT License](./LICENSE) で配布される。第三者由来部分のライセンスは [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) を参照。
+本ソフトウェアは [MIT License](./LICENSE) で配布される。
 なお「Anthropic」「Claude」「Codex」は各社の商標であり、本ソフトウェアは Anthropic および OpenAI の公式プロダクトではなく、両社による承認・推奨を受けたものでもない。
 
 ## 免責事項
@@ -80,4 +80,4 @@ defaults delete com.token-checker.app 2>/dev/null
 
 ## 謝辞
 
-UI のデザインは [s-age/ccmeter](https://github.com/s-age/ccmeter)（MIT License）を参考にした。MIT ライセンスの全文は [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) に同梱している。
+UI のデザインは [s-age/ccmeter](https://github.com/s-age/ccmeter)（MIT License）を参考にした。MIT ライセンスは [`LICENSE`](./LICENSE) に同梱している。
