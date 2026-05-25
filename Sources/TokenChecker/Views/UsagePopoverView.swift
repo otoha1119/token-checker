@@ -45,7 +45,7 @@ struct UsagePopoverView: View {
     private var settingsBlock: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("更新間隔")
+                Text(L10n.tr("settings.refresh_interval"))
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -59,7 +59,7 @@ struct UsagePopoverView: View {
             }
 
             HStack {
-                Text("ログイン時に自動起動")
+                Text(L10n.tr("settings.launch_at_login"))
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -77,7 +77,10 @@ struct UsagePopoverView: View {
     private var footer: some View {
         HStack {
             if viewModel.snapshot.fetchedAt > .distantPast {
-                Text("更新: \(DateFormatter.localizedString(from: viewModel.snapshot.fetchedAt, dateStyle: .none, timeStyle: .short))")
+                Text(L10n.format(
+                    "footer.updated_at",
+                    DateFormatter.localizedString(from: viewModel.snapshot.fetchedAt, dateStyle: .none, timeStyle: .short)
+                ))
                     .font(.system(size: 10))
                     .foregroundStyle(.tertiary)
             }
@@ -92,9 +95,9 @@ struct UsagePopoverView: View {
                 }
             }
             .buttonStyle(.borderless)
-            .help("今すぐ更新")
+            .help(L10n.tr("footer.refresh_now"))
 
-            Button("終了") {
+            Button(L10n.tr("footer.quit")) {
                 NSApplication.shared.terminate(nil)
             }
             .buttonStyle(.borderless)

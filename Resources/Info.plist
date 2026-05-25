@@ -9,6 +9,13 @@
     <string>TokenChecker</string>
     <key>CFBundleDisplayName</key>
     <string>Token Checker</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+        <string>zh-Hans</string>
+    </array>
     <key>CFBundleExecutable</key>
     <string>TokenChecker</string>
     <key>CFBundleIconFile</key>

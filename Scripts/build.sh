@@ -79,6 +79,11 @@ rm -rf "${APP_BUNDLE}"
 mkdir -p "${MACOS}" "${RESOURCES}"
 cp "${BUILD_DIR}/${PRODUCT}" "${MACOS}/"
 cp Resources/Info.plist "${CONTENTS}/"
+for localization in Resources/*.lproj; do
+    if [[ -d "${localization}" ]]; then
+        cp -R "${localization}" "${RESOURCES}/"
+    fi
+done
 # Info.plist の CFBundleIconFile=AppIcon は無条件のため、.icns 不在を静かに通さない．
 if [[ ! -f Resources/AppIcon.icns ]]; then
     error "Resources/AppIcon.icns が見つかりません。Info.plist の CFBundleIconFile=AppIcon と整合させるため必須です。"

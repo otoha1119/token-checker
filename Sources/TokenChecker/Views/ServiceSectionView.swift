@@ -28,12 +28,12 @@ struct ServiceSectionView: View {
                     Image(systemName: "person.badge.key")
                 }
                 .buttonStyle(.borderless)
-                .help("\(title) にログイン")
+                .help(L10n.format("service.login.help", title))
             }
 
             switch result {
             case .none:
-                Text("取得中…")
+                Text(L10n.tr("status.loading"))
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
             case .some(.success(let usage)):
@@ -47,18 +47,18 @@ struct ServiceSectionView: View {
     @ViewBuilder
     private func usageBlock(_ usage: ServiceUsage) -> some View {
         if let five = usage.fiveHour {
-            limitRow(label: "5時間", limit: five)
+            limitRow(label: L10n.tr("window.five_hour"), limit: five)
         } else {
-            Text("5時間ウィンドウのデータがありません")
+            Text(L10n.tr("window.five_hour.no_data"))
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
         }
 
         if let weekly = usage.weekly {
-            secondaryRow(label: "週次", limit: weekly)
+            secondaryRow(label: L10n.tr("window.weekly"), limit: weekly)
         }
         if let sonnet = usage.weeklySonnet {
-            secondaryRow(label: "週次 (Sonnet)", limit: sonnet)
+            secondaryRow(label: L10n.tr("window.weekly_sonnet"), limit: sonnet)
         }
     }
 
@@ -97,10 +97,10 @@ struct ServiceSectionView: View {
             HStack(spacing: 4) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundStyle(.orange)
-                Text("取得失敗")
+                Text(L10n.tr("error.fetch_failed"))
                     .font(.system(size: 12, weight: .medium))
             }
-            Text(err.errorDescription ?? "原因不明")
+            Text(err.errorDescription ?? L10n.tr("error.unknown"))
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -128,12 +128,12 @@ struct ServiceSectionView: View {
 
     private func resetLabel(_ date: Date) -> String {
         let now = Date()
-        if date <= now { return "まもなくリセット" }
+        if date <= now { return L10n.tr("reset.soon") }
         let f = DateComponentsFormatter()
         f.allowedUnits = [.hour, .minute]
         f.unitsStyle = .abbreviated
         let rel = f.string(from: now, to: date) ?? "—"
         let absolute = DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
-        return "あと \(rel) (\(absolute) リセット)"
+        return L10n.format("reset.remaining", rel, absolute)
     }
 }

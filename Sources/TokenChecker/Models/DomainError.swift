@@ -15,29 +15,29 @@ enum DomainError: Error, Equatable, LocalizedError, Sendable {
     var errorDescription: String? {
         switch self {
         case .keychainTokenMissing:
-            return "Claude Code の OAuth トークンが Keychain に見つかりません。ターミナルで `claude login` を実行してください。"
+            return L10n.tr("error.keychain_token_missing")
         case .anthropicUnauthorized:
-            return "Anthropic からの認証エラー (401)。`claude login` で再ログインしてください。"
+            return L10n.tr("error.anthropic_unauthorized")
         case .anthropicRateLimited(let retryAfter):
             if let sec = retryAfter {
                 let mins = max(1, Int((sec / 60).rounded()))
-                return "Anthropic API のレート制限に達しました。約 \(mins) 分後に自動で再試行します。"
+                return L10n.format("error.anthropic_rate_limited_with_retry", mins)
             }
-            return "Anthropic API のレート制限 (429)。次回ポーリングまで待機します。"
+            return L10n.tr("error.anthropic_rate_limited")
         case .anthropicHTTP(let status):
-            return "Anthropic API エラー (status \(status))"
+            return L10n.format("error.anthropic_http", status)
         case .codexCLINotFound:
-            return "Codex CLI が見つかりません。`npm i -g @openai/codex` を実行してください。"
+            return L10n.tr("error.codex_cli_not_found")
         case .codexProcessExited:
-            return "codex app-server が終了しました。再起動を試みます。"
+            return L10n.tr("error.codex_process_exited")
         case .codexRPCError(let message):
-            return "Codex RPC エラー: \(message)"
+            return L10n.format("error.codex_rpc", message)
         case .decoding(let detail):
-            return "レスポンスのデコードに失敗: \(detail)"
+            return L10n.format("error.decoding", detail)
         case .timeout:
-            return "通信がタイムアウトしました。"
+            return L10n.tr("error.timeout")
         case .network(let detail):
-            return "ネットワークエラー: \(detail)"
+            return L10n.format("error.network", detail)
         }
     }
 }

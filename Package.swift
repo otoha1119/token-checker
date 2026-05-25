@@ -18,5 +18,9 @@ let package = Package(
                 ])
             ]
         ),
+        .testTarget(
+            name: "TokenCheckerTests",
+            path: "Tests/TokenCheckerTests"
+        ),
     ]
 )
