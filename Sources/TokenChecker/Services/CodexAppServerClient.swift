@@ -97,7 +97,7 @@ actor CodexAppServerClient {
 
         proc.executableURL = executable
         // v0.130 以前: `codex app-server` 単体で stdio JSON-RPC サーバ
-        // v0.133 以降: app-server は引数なし起動が廃止され、`remote-control start` で
+        // v0.133 以降: app-server は引数なし起動が廃止され、`app-server daemon start` で
         //              daemon を立て、`app-server proxy` が stdio bytes をリレーする
         proc.arguments = (attempt == .daemonAndProxy) ? ["app-server", "proxy"] : ["app-server"]
         proc.environment = Self.childEnvironment(from: ProcessInfo.processInfo.environment)
@@ -295,13 +295,14 @@ actor CodexAppServerClient {
 
     // MARK: - v0.133 daemon bootstrap
 
-    /// v0.133+ で `codex remote-control start` を実行し daemon を確実に起動する。
-    /// PR #22878 のセマンティクスでは「準備完了まで待機して exit 0」となる。
-    /// 既起動の場合も exit 0 で idempotent に成功するはず。タイムアウト 5 秒。
+    /// v0.133+ で `codex app-server daemon start` を実行し daemon を確実に起動する。
+    /// Issue #2 報告者の記述に従う (`app-server` のサブコマンドとして `daemon` が追加された)。
+    /// 「準備完了まで待機して exit 0」想定で、既起動の場合も idempotent に成功する想定。
+    /// タイムアウト 5 秒。
     private static func ensureDaemon(executable: URL) async throws {
         let proc = Process()
         proc.executableURL = executable
-        proc.arguments = ["remote-control", "start"]
+        proc.arguments = ["app-server", "daemon", "start"]
         proc.environment = childEnvironment(from: ProcessInfo.processInfo.environment)
 
         let outPipe = Pipe()
@@ -348,15 +349,15 @@ actor CodexAppServerClient {
         case .ok:
             return
         case .timedOut:
-            Logger.codex.error("remote-control start timed out after 5s")
-            throw DomainError.network("codex remote-control start がタイムアウトしました (5s)")
+            Logger.codex.error("app-server daemon start timed out after 5s")
+            throw DomainError.network("codex app-server daemon start がタイムアウトしました (5s)")
         case .badExit(let code, let stderr):
             let detail = stderr.trimmingCharacters(in: .whitespacesAndNewlines)
-            Logger.codex.error("remote-control start failed (exit=\(code, privacy: .public)): \(detail, privacy: .public)")
-            throw DomainError.network("codex remote-control start failed (exit=\(code))")
+            Logger.codex.error("app-server daemon start failed (exit=\(code, privacy: .public)): \(detail, privacy: .public)")
+            throw DomainError.network("codex app-server daemon start failed (exit=\(code))")
         case .spawnFailed(let detail):
-            Logger.codex.error("remote-control start spawn failed: \(detail, privacy: .public)")
-            throw DomainError.network("codex remote-control start spawn failed: \(detail)")
+            Logger.codex.error("app-server daemon start spawn failed: \(detail, privacy: .public)")
+            throw DomainError.network("codex app-server daemon start spawn failed: \(detail)")
         }
     }
 
@@ -612,7 +613,8 @@ extension CodexRateLimitsDTO {
 fileprivate enum CodexLaunchFlow: Sendable {
     /// v0.130 まで: `codex app-server` 単体で stdio JSON-RPC サーバ。
     case stdio
-    /// v0.133 以降: `remote-control start` で daemon を起動し、`app-server proxy` で stdio をリレー。
+    /// v0.133 以降: `codex app-server daemon start` で daemon を起動し、
+    /// `codex app-server proxy` で stdio をリレー。
     case daemonAndProxy
 
     /// 試行順序。新しい方を先頭に置く (将来 v0.150 等で別の方式が来たらここに追加)。

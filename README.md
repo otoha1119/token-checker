@@ -59,8 +59,18 @@ codex login
 ## データ取得経路
 
 - **Claude**: `/usr/bin/security` 経由で Keychain (`Claude Code-credentials`) から OAuth アクセストークンを取得し、`https://api.anthropic.com/api/oauth/usage` に対して `anthropic-beta: oauth-2025-04-20` ヘッダー付きで GET する。
-- **Codex**: `/opt/homebrew/bin/codex app-server` を子プロセスとして起動し、行区切り JSON-RPC 経由で `account/rateLimits/read` を呼ぶ。
+- **Codex**: `codex` バイナリを子プロセスとして起動し、行区切り JSON-RPC 経由で `account/rateLimits/read` を呼ぶ。バイナリの場所は Homebrew / nodebrew / nvm / volta / asdf / fnm 等の主要なインストール先を順に探索し、見つからない場合はログインシェル経由で `command -v codex` を解決する。`UserDefaults` の `codexPath` キーで手動指定も可能 (`defaults write com.token-checker.app codexPath /abs/path/codex`)。起動コマンドは CLI バージョンに応じて自動的に切り替わる (`codex app-server daemon start` + `codex app-server proxy` 形式と `codex app-server` 単体形式の双方をサポート)。
 
+## アップデート
+
+最新のソースを取得して再ビルドする。
+
+```bash
+git pull
+./Scripts/build.sh --install
+```
+
+既存のアプリは自動的に上書きされる。設定 (ポーリング間隔、ログイン時の自動起動) は UserDefaults に保存されているため引き継がれる。アプリが既に起動中の場合はメニューバーの「終了」で一度落としてから再度開く。
 
 ## アンインストール
 
@@ -139,7 +149,18 @@ The popover (opened by clicking the menu bar item) shows 5-hour and weekly windo
 ## Data Sources
 
 - **Claude**: retrieves the OAuth access token from Keychain (`Claude Code-credentials`) via `/usr/bin/security`, then issues a GET request to `https://api.anthropic.com/api/oauth/usage` with the `anthropic-beta: oauth-2025-04-20` header.
-- **Codex**: spawns `/opt/homebrew/bin/codex app-server` as a subprocess and calls `account/rateLimits/read` via line-delimited JSON-RPC.
+- **Codex**: spawns the `codex` binary as a subprocess and calls `account/rateLimits/read` via line-delimited JSON-RPC. The binary is discovered by probing common install locations (Homebrew, nodebrew, nvm, volta, asdf, fnm, ...) and falling back to `command -v codex` via the user's login shell. A manual override is available via the `UserDefaults` `codexPath` key (`defaults write com.token-checker.app codexPath /abs/path/codex`). The launch command adapts to the installed CLI version automatically and supports both `codex app-server daemon start` + `codex app-server proxy` (v0.133+) and the single-arg `codex app-server` form (v0.130 and earlier).
+
+## Updating
+
+Pull the latest source and rebuild.
+
+```bash
+git pull
+./Scripts/build.sh --install
+```
+
+The existing app is overwritten in place. Settings (polling interval, launch-at-login) persist via UserDefaults. If the app is already running, quit it from the menu bar item first, then relaunch.
 
 ## Uninstall
 
