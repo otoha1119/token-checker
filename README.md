@@ -21,6 +21,12 @@ macOS のメニューバーに Claude Code と Codex の使用率を常時表示
 
 Claude Code と Codex のいずれかが欠けていても、もう一方は動作する。
 
+> ⚠️ **`brew install codex`（formula 版）は非対応**
+>
+> `brew install codex` でインストールされる formula 版は v0.36.0 であり、
+> `app-server` サブコマンドが含まれていないため Token Checker は動作しない。
+> 必ず `--cask` フラグを付けるか、npm 経由でインストールすること。
+
 ## インストール
 
 このリポジトリを clone した上で、自分のマシンでビルドして使うことを前提とする。
@@ -116,6 +122,12 @@ For accounts already authenticated via `claude login` / `codex login`, this app 
 | Codex CLI | authenticated via `codex login` |
 
 If only one of Claude Code or Codex is available, the other still works.
+
+> ⚠️ **`brew install codex` (Homebrew formula) is NOT supported**
+>
+> The Homebrew formula installs v0.36.0, which does not include the `app-server` subcommand
+> and therefore will not work with Token Checker.
+> Use the `--cask` flag or install via npm instead.
 
 ## Installation
 
