@@ -183,13 +183,18 @@ actor CodexAppServerClient {
     ///      `.zshrc` 等を source する副作用に注意。
     private func resolveExecutable() async -> URL? {
         if let userPath = UserDefaults.standard.string(forKey: "codexPath"),
-           !userPath.isEmpty,
-           FileManager.default.isExecutableFile(atPath: userPath) {
-            return URL(fileURLWithPath: userPath)
+           !userPath.isEmpty {
+            let resolved = URL(fileURLWithPath: userPath).resolvingSymlinksInPath().path
+            if FileManager.default.isExecutableFile(atPath: resolved) {
+                return URL(fileURLWithPath: resolved)
+            }
         }
 
-        if let known = candidates.first(where: { FileManager.default.isExecutableFile(atPath: $0) }) {
-            return URL(fileURLWithPath: known)
+        if let known = candidates.first(where: {
+            let resolved = URL(fileURLWithPath: $0).resolvingSymlinksInPath().path
+            return FileManager.default.isExecutableFile(atPath: resolved)
+        }) {
+            return URL(fileURLWithPath: known).resolvingSymlinksInPath()
         }
 
         if let resolved = await Self.resolveViaShell() {
@@ -270,8 +275,13 @@ actor CodexAppServerClient {
                     .map { $0.trimmingCharacters(in: .whitespaces) }
                     .last { $0.hasPrefix("/") }
 
-                if let path, FileManager.default.isExecutableFile(atPath: path) {
-                    continuation.resume(returning: path)
+                if let path {
+                    let resolved = URL(fileURLWithPath: path).resolvingSymlinksInPath().path
+                    if FileManager.default.isExecutableFile(atPath: resolved) {
+                        continuation.resume(returning: resolved)
+                    } else {
+                        continuation.resume(returning: nil)
+                    }
                 } else {
                     continuation.resume(returning: nil)
                 }
@@ -399,7 +409,11 @@ actor CodexAppServerClient {
         let envelope = RPCOutbound(method: method, id: id, params: params)
         var data = try JSONEncoder().encode(envelope)
         data.append(0x0A)
-        stdin.fileHandleForWriting.write(data)
+        do {
+            try stdin.fileHandleForWriting.write(contentsOf: data)
+        } catch {
+            throw DomainError.codexProcessExited
+        }
     }
 
     /// 1 リクエストを投げて、レスポンスかタイムアウトのどちらかで完了する。

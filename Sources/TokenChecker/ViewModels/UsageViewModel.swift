@@ -105,10 +105,13 @@ final class UsageViewModel {
     func openCodexLogin()  { spawnLogin(.codex) }
 
     private func spawnLogin(_ target: LoginTarget) {
+        let escaped = target.command
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
         let script = """
         tell application "Terminal"
             activate
-            do script "\(target.command)"
+            do script "\(escaped)"
         end tell
         """
         let process = Process()
